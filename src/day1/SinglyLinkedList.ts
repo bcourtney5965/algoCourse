@@ -20,11 +20,14 @@ export default class SinglyLinkedList<T> {
     }
 
     prepend(item: T): void {
-        // if head & tail are null
-        //     point them to item
-        //     return
-        // point T.next to head
-        // point head to T
+        const newNode = new Node(item);
+        this.length++;
+        if (!this.head) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            newNode.next = this.head;
+            this.head = newNode
     }
     insertAt(item: T, idx: number): void {}
     append(item: T): void {
@@ -44,6 +47,14 @@ export default class SinglyLinkedList<T> {
         }
     }
     remove(item: T): T | undefined {}
-    get(idx: number): T | undefined {}
+    get(idx: number): T | undefined {
+        // if idx is bigger than legnth
+        if (idx < 0 || idx >= this.length) return undefined;
+        let current = this.head;
+        for (let i = 0; i < idx; ++i) {
+            current = current?.next;
+        }
+        return current?.value || undefined;
+    }
     removeAt(idx: number): T | undefined {}
 }
