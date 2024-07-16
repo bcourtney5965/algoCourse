@@ -72,7 +72,14 @@ export default class SinglyLinkedList<T> {
         return;
     }
     get(idx: number): T | undefined {
-        return;
+        if (idx < 0 || idx >= this.length) return undefined;
+        let current = this.head;
+        for (let i = 0; i < idx; ++i) {
+            if (current !== null) {
+                current = current?.next;
+            }
+        }
+        return current?.value || undefined;
     }
     removeAt(idx: number): T | undefined {
         return;
