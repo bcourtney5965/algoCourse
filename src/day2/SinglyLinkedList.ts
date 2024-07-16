@@ -31,20 +31,26 @@ export default class SinglyLinkedList<T> {
         }
     }
     insertAt(item: T, idx: number): void {
-        if (idx < 0 || idx >= this.length) return;
+        if (idx < 0 || idx > this.length) return;
         const newNode = new Node(item);
         this.length++;
         if (idx === 0) {
             newNode.next = this.head;
             this.head = newNode;
+            if (this.length === 1) this.tail = newNode; // Update tail if list was empty
             return;
         }
         let current = this.head;
         for (let i = 0; i < idx - 1; ++i) {
-            current = current?.next;
+            if (current !== null) {
+                current = current.next;
+            }
         }
-        newNode.next = current?.next;
-        current.next = newNode;
+        if (current !== null) {
+            newNode.next = current.next;
+            current.next = newNode;
+            if (newNode.next === null) this.tail = newNode; // Update tail if appended at the end
+        }
     }
     append(item: T): void {
         const newNode = new Node(item);
