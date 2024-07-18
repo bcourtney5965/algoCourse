@@ -71,7 +71,30 @@ export default class SinglyLinkedList<T> {
         }
     }
     remove(item: T): T | undefined {
-        return;
+        if (!this.head) return undefined;
+
+        if (this.head.value === item) {
+            this.head = this.head.next;
+            this.decrementLength();
+            if (this.length === 0) {
+                this.tail === null;
+            }
+            return item;
+        }
+
+        let current = this.head;
+        while (current.next) {
+            if (current.next.value === item) {
+                current.next = current.next.next;
+                this.decrementLength();
+                if (current.next === null) {
+                    this.tail = current;
+                }
+                return item;
+            }
+            current = current.next;
+        }
+        return undefined;
     }
     get(idx: number): T | undefined {
         if (idx < 0 || idx >= this.length) return undefined;
