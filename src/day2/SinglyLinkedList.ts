@@ -84,18 +84,29 @@ export default class SinglyLinkedList<T> {
         return current?.value || undefined;
     }
     removeAt(idx: number): T | undefined {
-        if (idx < 0 || idx >= this.length) return;
-        let current = this.head;
-        let previous = null;
-        let output = undefined;
-        // if head
-        if (current === null) return;
+        if (idx < 0 || idx >= this.length || !this.head) return undefined;
+
+        let output: T | undefined;
+
         if (idx === 0) {
-            output = current.value;
-            this.head = current.next;
-            current = null;
+            output = this.head.value;
+            this.head = this.head.next;
+        } else {
+            let previous = this.head;
+            for (let i = 0; i < idx - 1 && previous.next; i++) {
+                previous = previous.next;
+            }
+
+            if (previous.next) {
+                output = previous.next.value;
+                previous.next = previous.next.next;
+
+                if (idx === this.length - 1) {
+                    this.tail = previous;
+                }
+            }
         }
-        // if NOT head
+
         this.decrementLength();
         return output;
     }
