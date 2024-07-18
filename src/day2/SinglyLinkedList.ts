@@ -18,7 +18,9 @@ export default class SinglyLinkedList<T> {
         this.head = null;
         this.tail = null;
     }
-
+    decrementLength(): void {
+        this.length && this.length--;
+    }
     prepend(item: T): void {
         const newNode = new Node(item);
         this.length++;
@@ -82,6 +84,19 @@ export default class SinglyLinkedList<T> {
         return current?.value || undefined;
     }
     removeAt(idx: number): T | undefined {
-        return;
+        if (idx < 0 || idx >= this.length) return;
+        let current = this.head;
+        let previous = null;
+        let output = undefined;
+        // if head
+        if (current === null) return;
+        if (idx === 0) {
+            output = current.value;
+            this.head = current.next;
+            current = null;
+        }
+        // if NOT head
+        this.decrementLength();
+        return output;
     }
 }
