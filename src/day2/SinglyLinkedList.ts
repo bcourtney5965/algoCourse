@@ -43,10 +43,8 @@ export default class SinglyLinkedList<T> {
             return;
         }
         let current = this.head;
-        for (let i = 0; i < idx - 1; ++i) {
-            if (current !== null) {
-                current = current.next;
-            }
+        for (let i = 0; i < idx - 1 && current; ++i) {
+            current = current.next;
         }
         if (current !== null) {
             newNode.next = current.next;
@@ -99,10 +97,8 @@ export default class SinglyLinkedList<T> {
     get(idx: number): T | undefined {
         if (idx < 0 || idx >= this.length) return undefined;
         let current = this.head;
-        for (let i = 0; i < idx; ++i) {
-            if (current !== null) {
-                current = current?.next;
-            }
+        for (let i = 0; i < idx && current; ++i) {
+            current = current.next;
         }
         return current?.value || undefined;
     }
