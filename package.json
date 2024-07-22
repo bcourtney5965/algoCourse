@@ -14,11 +14,11 @@
         "typescript": "^4.7.4"
     },
     "scripts": {
-        "test": "jest LinearSearchList BubbleSort SinglyLinkedList",
+        "test": "jest Queue",
         "clear": "node ./scripts/clear.js",
         "prettier": "prettier --write ./src",
         "generate": "node ./scripts/generate.js",
-        "day": "echo src/day2"
+        "day": "echo src/day3"
     },
     "devDependencies": {
         "@swc-node/register": "^1.6.7"
