@@ -27,7 +27,17 @@ export default class Queue<T> {
         ++this.length;
     }
 
-    enqueue(item: T): void {}
+    enqueue(item: T): void {
+        const newItem = new Item(item);
+        if (this.tail === null) {
+            this.head = newItem;
+            this.tail = newItem;
+        } else if (this.tail !== null) {
+            this.tail.next = newItem;
+            this.tail = newItem;
+        }
+        this.incrementLength();
+    }
     deque(): T | undefined {
         return undefined;
     }
