@@ -32,7 +32,17 @@ export default class Queue<T> {
         this.tail = newItem;
     }
     deque(): T | undefined {
-        return undefined;
+        if (!this.head) return undefined;
+
+        const head = this.head;
+        this.head = this.head.next;
+        this.decrementLength();
+        if (this.length === 0) this.tail = undefined;
+
+        // free
+        head.next = undefined;
+
+        return head.value;
     }
     peek(): T | undefined {
         return this.head?.value;
