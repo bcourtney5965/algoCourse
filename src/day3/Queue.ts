@@ -1,22 +1,16 @@
-class Item<T> {
-    public value: T;
-    public next: Item<T> | null;
-
-    constructor(value: T, next: Item<T> | null = null) {
-        this.value = value;
-        this.next = next;
-    }
-}
+type Item<T> = {
+    value: T;
+    next?: Item<T>;
+};
 
 export default class Queue<T> {
     public length: number;
-    public head: Item<T> | null;
-    public tail: Item<T> | null;
+    private head?: Item<T>;
+    private tail?: Item<T>;
 
     constructor() {
         this.length = 0;
-        this.head = null;
-        this.tail = null;
+        this.head = this.tail = undefined;
     }
 
     decrementLength() {
@@ -28,15 +22,14 @@ export default class Queue<T> {
     }
 
     enqueue(item: T): void {
-        const newItem = new Item(item);
-        if (this.tail === null) {
-            this.head = newItem;
-            this.tail = newItem;
-        } else if (this.tail !== null) {
-            this.tail.next = newItem;
-            this.tail = newItem;
-        }
+        const newItem: Item<T> = { value: item };
         this.incrementLength();
+        if (!this.tail) {
+            this.head = this.tail = newItem;
+            return;
+        }
+        this.tail.next = newItem;
+        this.tail = newItem;
     }
     deque(): T | undefined {
         return undefined;
