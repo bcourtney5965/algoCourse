@@ -1,5 +1,5 @@
 type Node<T> = {
-    value: number;
+    value: T;
     next: Node<T> | null;
 };
 
@@ -13,7 +13,20 @@ export default class Stack<T> {
         this.head = this.tail = undefined;
     }
 
-    push(item: T): void {}
+    incrementLength(): void {
+        ++this.length;
+    }
+
+    push(item: T): void {
+        const newNode = { value: item, next: null } as Node<T>;
+        this.incrementLength();
+        if (!this.head) {
+            this.head = this.tail = newNode;
+        } else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+    }
     pop(): T | undefined {
         return;
     }
