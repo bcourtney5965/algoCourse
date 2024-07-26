@@ -13,15 +13,12 @@ test("stack", function () {
     list.push(11);
     expect(list.pop()).toEqual(11);
     expect(list.pop()).toEqual(7);
+
     expect(list.peek()).toEqual(5);
     expect(list.pop()).toEqual(5);
     expect(list.pop()).toEqual(undefined);
 
-    // just wanted to make sure that I could not blow up myself when i remove
-    // everything
     list.push(69);
     expect(list.peek()).toEqual(69);
     expect(list.length).toEqual(1);
-
-    //yayaya
 });
