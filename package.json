@@ -14,11 +14,11 @@
         "typescript": "^4.7.4"
     },
     "scripts": {
-        "test": "jest Stack",
+        "test": "jest DoublyLinkedList",
         "clear": "node ./scripts/clear.js",
         "prettier": "prettier --write ./src",
         "generate": "node ./scripts/generate.js",
-        "day": "echo src/day4"
+        "day": "echo src/day5"
     },
     "devDependencies": {
         "@swc-node/register": "^1.6.7"
