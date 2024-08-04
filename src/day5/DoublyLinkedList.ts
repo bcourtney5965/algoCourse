@@ -42,7 +42,19 @@ export default class DoublyLinkedList<T> {
         return;
     }
     get(idx: number): T | undefined {
-        return;
+        if (!this.head || idx + 1 > this.length) return undefined;
+
+        let current: Node<T> | undefined = this.head;
+        let counter: number = 0;
+
+        while (current) {
+            if (counter === idx) {
+                return current.value;
+            }
+            current = current.next;
+            ++counter;
+        }
+        return undefined;
     }
     removeAt(idx: number): T | undefined {
         return;
