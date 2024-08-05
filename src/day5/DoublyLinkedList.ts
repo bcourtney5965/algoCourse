@@ -58,6 +58,55 @@ export default class DoublyLinkedList<T> {
         return undefined;
     }
     removeAt(idx: number): T | undefined {
-        return;
+        if (!this.head || idx + 1 > this.length) return;
+
+        let current: Node<T> | undefined = this.head;
+        let position: number = 0;
+        let output: T | undefined = undefined;
+        let node: Node<T> | undefined;
+
+        while (current) {
+            if (idx === position) {
+                node = current;
+                let prev: Node<T> | undefined;
+                let next: Node<T> | undefined;
+                // for head
+                if (idx === 0 && node.next) {
+                    next = node.next;
+                    next.prev = undefined;
+                    this.head = next;
+                    output = node.value;
+                    // for tail
+                } else if (idx === this.length - 1 && node.prev) {
+                    prev = node.prev;
+                    prev.next = undefined;
+                    this.tail = prev;
+                    output = node.value;
+                    // for final intem
+                } else if (this.head === this.tail && this.length === 1) {
+                    output = node.value;
+                    this.head = this.tail = undefined;
+                    // for  middle
+                } else if (idx >= 0 && idx < this.length) {
+                    prev = node.prev;
+                    next = node.next;
+                    if (prev) {
+                        prev.next = next;
+                    }
+                    if (next) {
+                        next.prev = prev;
+                    }
+                    output = node.value;
+                }
+                this.decrement();
+                break;
+            }
+
+            current = current.next;
+            ++position;
+        }
+
+        node = undefined;
+        return output;
     }
 }
