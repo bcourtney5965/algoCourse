@@ -44,15 +44,16 @@ export default class DoublyLinkedList<T> {
     get(idx: number): T | undefined {
         if (!this.head || idx + 1 > this.length) return undefined;
 
-        let current: Node<T> | undefined = this.head;
-        let counter: number = 0;
+        const increment: boolean = idx < this.length / 2;
+        let current: Node<T> | undefined = increment ? this.head : this.tail;
+        let position: number = increment ? 0 : this.length - 1;
 
         while (current) {
-            if (counter === idx) {
+            if (position === idx) {
                 return current.value;
             }
-            current = current.next;
-            ++counter;
+            current = increment ? current.next : current.prev;
+            increment ? ++position : --position;
         }
         return undefined;
     }
