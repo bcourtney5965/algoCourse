@@ -23,7 +23,18 @@ export default class DoublyLinkedList<T> {
         this.length && --this.length;
     }
 
-    prepend(item: T): void {}
+    prepend(item: T): void {
+        const node = { value: item } as Node<T>;
+        this.increment();
+
+        if (!this.head) {
+            this.head = node;
+        }
+
+        node.next = this.head;
+        this.head.prev = node;
+        this.head = node;
+    }
     insertAt(item: T, idx: number): void {}
     append(item: T): void {
         const node = { value: item } as Node<T>;
