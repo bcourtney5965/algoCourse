@@ -50,7 +50,35 @@ export default class DoublyLinkedList<T> {
         }
     }
     remove(item: T): T | undefined {
-        return;
+        if (!this.head || !this.tail) return undefined;
+
+        let current: Node<T> | undefined = this.head;
+        while (current) {
+            if (current.value === item) {
+                const next = current.next;
+                const prev = current.prev;
+
+                if (next) {
+                    next.prev = prev;
+                } else {
+                    this.tail = prev;
+                }
+
+                if (prev) {
+                    prev.next = next;
+                } else {
+                    this.head = next;
+                }
+
+                current.prev = current.next = undefined;
+
+                this.decrement();
+                return item;
+            }
+            current = current.next;
+        }
+
+        return undefined;
     }
     get(idx: number): T | undefined {
         if (!this.head || idx + 1 > this.length) return undefined;
