@@ -28,7 +28,7 @@ export default class DoublyLinkedList<T> {
         this.increment();
 
         if (!this.head) {
-            this.head = node;
+            this.head = this.tail = node;
         }
 
         node.next = this.head;
