@@ -36,7 +36,37 @@ export default class DoublyLinkedList<T> {
         this.head.prev = node;
         this.head = node;
     }
-    insertAt(item: T, idx: number): void {}
+    insertAt(item: T, idx: number): void {
+        if (idx < 0 || idx > this.length) {
+            throw new Error("Incorrect idx");
+        }
+        const node = { value: item } as Node<T>;
+        if (!this.head) {
+            this.head = this.tail = node;
+        } else if (idx === 0) {
+            node.next = this.head;
+            this.head = node;
+        } else if (idx === this.length && this.tail) {
+            node.prev = this.tail;
+            this.tail.next = node;
+        } else {
+            let num: number = 0;
+            let current: Node<T> | undefined = this.head;
+            while (current) {
+                if (num === idx) {
+                    node.prev = current;
+                    node.next = current.next;
+                    current.next = node;
+                    if (node.next) {
+                        node.next.prev = node;
+                    }
+                }
+                ++num;
+                current = current.next;
+            }
+        }
+        this.increment();
+    }
     append(item: T): void {
         const node = { value: item } as Node<T>;
         this.increment();
