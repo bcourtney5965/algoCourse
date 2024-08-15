@@ -17,7 +17,10 @@ export default class ArrayList<T> {
 
     prepend(item: T): void {}
     insertAt(item: T, idx: number): void {}
-    append(item: T): void {}
+    append(item: T): void {
+        this.increment();
+        this.list.push(item);
+    }
     remove(item: T): T | undefined {
         return;
     }
