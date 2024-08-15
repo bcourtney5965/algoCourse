@@ -25,7 +25,14 @@ export default class ArrayList<T> {
         return;
     }
     get(idx: number): T | undefined {
-        return;
+        let out: T | undefined = undefined;
+        for (let i = 0; i < this.length; ++i) {
+            if (idx === i) {
+                out = this.list[i];
+                break;
+            }
+        }
+        return out;
     }
     removeAt(idx: number): T | undefined {
         return;
