@@ -18,8 +18,15 @@ export default class ArrayList<T> {
     prepend(item: T): void {}
     insertAt(item: T, idx: number): void {}
     append(item: T): void {
+        if (this.length === this.list.length) {
+            // double the length
+            this.list = [
+                ...this.list,
+                ...new Array(this.length).fill(undefined),
+            ];
+        }
+        this.list[this.length] = item;
         this.increment();
-        this.list.push(item);
     }
     remove(item: T): T | undefined {
         return;
