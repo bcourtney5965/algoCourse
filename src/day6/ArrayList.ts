@@ -42,6 +42,15 @@ export default class ArrayList<T> {
         return out;
     }
     removeAt(idx: number): T | undefined {
-        return;
+        if (idx < 0 || idx >= this.length) throw new Error("Invalid id");
+
+        const out: T | undefined = this.list[idx] || undefined;
+        this.list[idx] = undefined;
+        for (let i = idx; i < this.length - 1; ++i) {
+            this.list[i] = this.list[i + 1];
+        }
+        this.decrement();
+        this.list[this.length] = undefined;
+        return out;
     }
 }
