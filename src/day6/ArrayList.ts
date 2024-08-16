@@ -1,17 +1,17 @@
 export default class ArrayList<T> {
     public length: number;
-    private list: T[];
+    private list: (T | undefined)[];
 
-    constructor() {
+    constructor(size: number = 4) {
         this.length = 0;
-        this.list = [];
+        this.list = new Array(size).fill(undefined);
     }
 
-    increment(): void {
+    private increment(): void {
         this.length++;
     }
 
-    decrement(): void {
+    private decrement(): void {
         this.length && --this.length;
     }
 
