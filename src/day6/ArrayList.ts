@@ -29,7 +29,23 @@ export default class ArrayList<T> {
         this.increment();
     }
     remove(item: T): T | undefined {
-        return;
+        let out: T | undefined = undefined;
+        let idx: number | undefined;
+        // find item
+        for (let i = 0; i <= this.length; ++i) {
+            if (this.list[i] === item) {
+                out = this.list[i];
+                this.list[i] === undefined;
+                idx = i;
+                break;
+            }
+        }
+        // reorder ArrayList
+        for (let i = idx; typeof i === "number" && i < this.length - 1; ++i) {
+            this.list[i] = this.list[i + 1];
+        }
+        out && this.decrement();
+        return out;
     }
     get(idx: number): T | undefined {
         let out: T | undefined = undefined;
