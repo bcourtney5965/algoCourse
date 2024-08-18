@@ -15,7 +15,20 @@ export default class ArrayList<T> {
         this.length && --this.length;
     }
 
-    prepend(item: T): void {}
+    prepend(item: T): void {
+        if (this.length === this.list.length) {
+            this.list = [
+                ...this.list,
+                ...new Array(this.length).fill(undefined),
+            ];
+            this.length = this.length * 2;
+        }
+        for (let i = this.length; i > 0; --i) {
+            this.list[i] = this.list[i - 1];
+        }
+        this.list[0] = item;
+        this.increment();
+    }
     insertAt(item: T, idx: number): void {}
     append(item: T): void {
         if (this.length === this.list.length) {
