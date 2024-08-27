@@ -3,6 +3,13 @@ type Point = {
     y: number;
 };
 
+const dir = [
+    [0, -1], // north
+    [1, 0], // east
+    [0, 1], // south
+    [-1, 0], // west
+];
+
 const locationIsOutsideMaze = (location: Point, maze: string[]): boolean => {
     const { x, y } = location;
     const width: number = maze[0]?.length || 0;
@@ -16,10 +23,12 @@ const walk = (
     curr: Point,
     end: Point,
     seen: boolean[][],
+    path: Point[] = [],
 ): boolean => {
     // BASE CASE(S)
-    //      if we're at the end
+    //          WE'VE REACHED THE END
     if (curr.x === end.x && curr.y === end.y) {
+        path.push(curr);
         return true;
         //      WE'RE OFF THE BOARD
     } else if (locationIsOutsideMaze(curr, maze)) {
@@ -32,12 +41,25 @@ const walk = (
         return false;
     }
     // RESURSIVE CASE
-    //      GO NORTH
-    //      GO SOUTH
-    //      GO WEST
-    //      GO EAST
-    //          RECORD CURRENT POSITION
-    return;
+    // pre
+    seen[curr.y][curr.x] = true;
+    path.push(curr);
+    // recurse
+    for (let i = 0; i < dir.length; i++) {
+        const [dx, dy] = dir[i];
+        const isSuccessful = walk(
+            maze,
+            wall,
+            { x: curr.x + dx, y: curr.y + dy },
+            end,
+            seen,
+            path,
+        );
+        if (isSuccessful) return true;
+    }
+    // post
+    path.pop();
+    return false;
 };
 
 export default function solve(
@@ -45,4 +67,16 @@ export default function solve(
     wall: string,
     start: Point,
     end: Point,
-): Point[] {}
+): Point[] {
+    const seen: boolean[][] = [];
+    const path: Point[] = [];
+
+    for (let i = 0; i < maze.length; i++) {
+        seen[i] = [];
+        for (let j = 0; j < maze[i].length; j++) {
+            seen[i][j] = false;
+        }
+    }
+    walk(maze, wall, start, end, seen, path);
+    return path;
+}
