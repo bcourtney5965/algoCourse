@@ -11,33 +11,34 @@ const directions = [
 ];
 
 const walk = (
-    start: Point,
-    end: Point,
-    wall: string,
     maze: string[],
+    wall: string,
+    curr: Point,
+    end: Point,
     path: number[][],
+    seen: boolean[][]
 ): boolean | Point[][] => {
     // BASE CASES
     // if at the end
-    if (start.x === end.x && start.y === end.y) {
-        path.push(start);
+    if (curr.x === end.x && curr.y === end.y) {
+        path.push(curr);
         return true;
     }
     // if outside
     if (
-        start.x < 0 ||
-        start.x > maze[0][0].length ||
-        start.y < 0 ||
-        start.y > maze[0].length
+        curr.x < 0 ||
+        curr.x >= maze[0].length ||
+        curr.y < 0 ||
+        curr.y >= maze.length
     ) {
         return false;
     }
     // if at a wall
-    if (maze[start.y][start.x] === wall) {
+    if (maze[curr.y][curr.x] === wall) {
         return false;
     }
     // if already visited
-    if ((path[start.y], [start.x])) {
+    if ((seen[curr.y], [curr.x])) {
         return false;
     }
     // RECURSIVE CASE
