@@ -1,3 +1,3 @@
 module.exports = {
-    dsa: ["MazeSolver"],
+    dsa: ["QuickSort"],
 };
