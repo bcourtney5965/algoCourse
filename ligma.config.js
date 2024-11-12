@@ -1,3 +1,3 @@
 module.exports = {
-    dsa: ["QuickSort"],
+    dsa: ["BTInOrder", "BTPostOrder", "BTPreOrder"],
 };
