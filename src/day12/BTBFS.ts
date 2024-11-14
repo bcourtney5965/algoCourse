@@ -36,20 +36,34 @@ class Queue<T> {
 
         var temp = this.first;
         if (this.first === this.last) {
-            this.first = this.last = null;
+            this.last = null;
         }
-        if (this.first) {
-            this.first = this.first.next;
-            this.size--;
-        }
+        this.first = this.first.next;
+        this.size--;
         return temp.value;
     }
 }
 
-function breadthFirstSearch(head: BinaryNode<number>, needle: number) {}
+function breadthFirstSearch(head: BinaryNode<number>, needle: number) {
+    const nodes = new Queue<BinaryNode<number>>();
+    nodes.enqueue(head);
+
+    while (nodes.size) {
+        const node = nodes.dequeue();
+        if (node?.value === needle) return true;
+
+        if (node?.left) {
+            nodes.enqueue(node.left);
+        }
+
+        if (node?.right) {
+            nodes.enqueue(node.right);
+        }
+    }
+
+    return false;
+}
 
 export default function bfs(head: BinaryNode<number>, needle: number): boolean {
-    // const nodes = new Queue<number | null>();
-    // return breadthFirstSearch(head, needle, nodes);
     return breadthFirstSearch(head, needle);
 }
