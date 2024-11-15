@@ -14,11 +14,11 @@
         "typescript": "^4.7.4"
     },
     "scripts": {
-        "test": "jest BTBFS",
+        "test": "jest CompareBinaryTrees",
         "clear": "node ./scripts/clear.js",
         "prettier": "prettier --write ./src",
         "generate": "node ./scripts/generate.js",
-        "day": "echo src/day12"
+        "day": "echo src/day13"
     },
     "devDependencies": {
         "@swc-node/register": "^1.6.7"

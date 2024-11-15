@@ -1,3 +1,3 @@
 module.exports = {
-    dsa: ["BTBFS"],
+    dsa: ["CompareBinaryTrees"],
 };
