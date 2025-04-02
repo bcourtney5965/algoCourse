@@ -19,73 +19,75 @@ export default class MinHeap {
     return idx * 2 + 2;
   }
 
-  private incrementLength(): void {
-    this.length++;
-  }
-
-  private decrementLength(): void {
-    this.length--;
-  }
-
   private heapifyUp(idx: number): void {
     if (idx === 0) return;
 
-    // let idx = this.length - 1;
-    // get the children indexes
-    const p = this.parent(idx);
-    const parentV = this.data[p];
-    const v = this.data[idx];
+    const parentIdx = this.parent(idx);
+    const parentValue = this.data[parentIdx];
+    const currentValue = this.data[idx];
 
-    // while num > smaller child
-    if (parentV > v) {
-      //      swap with parent
-      this.data[idx] = parentV;
-      this.data[p] = v;
-      this.heapifyUp(p);
+    if (parentValue > currentValue) {
+      // Swap with parent
+      this.data[idx] = parentValue;
+      this.data[parentIdx] = currentValue;
+      this.heapifyUp(parentIdx);
     }
   }
 
   private heapifyDown(idx: number): void {
-    const lIdx = this.leftChild(idx);
-    const rIdx = this.rightChild(idx);
-    // if idx > or equal to length return
-    if (idx >= this.length || lIdx >= this.length) return;
+    const leftIdx = this.leftChild(idx);
+    const rightIdx = this.rightChild(idx);
 
-    const lV = this.data[lIdx];
-    const rV = this.data[rIdx];
-    const v = this.data[idx];
+    // If no children, stop
+    if (idx >= this.length || leftIdx >= this.length) return;
 
-    if (lV > rV && v > rV) {
-      this.data[idx] = rV;
-      this.data[rIdx] = v;
-      this.heapifyDown(rIdx);
-    } else if (rV > lV && v > lV) {
-      this.data[idx] = lV;
-      this.data[lIdx] = v;
-      this.heapifyDown(lIdx);
+    const currentValue = this.data[idx];
+    const leftValue = this.data[leftIdx];
+    const rightValue =
+      this.data[rightIdx] !== undefined ? this.data[rightIdx] : Infinity;
+
+    // Find the smallest value among current node and its children
+    if (
+      rightIdx < this.length &&
+      rightValue < leftValue &&
+      rightValue < currentValue
+    ) {
+      // Right child is smallest, swap with right
+      this.data[idx] = rightValue;
+      this.data[rightIdx] = currentValue;
+      this.heapifyDown(rightIdx);
+    } else if (leftValue < currentValue) {
+      // Left child is smallest, swap with left
+      this.data[idx] = leftValue;
+      this.data[leftIdx] = currentValue;
+      this.heapifyDown(leftIdx);
     }
   }
 
   insert(value: number): void {
-    // push it onto the back
+    // Add value to the end of the heap
     this.data[this.length] = value;
     this.heapifyUp(this.length);
-    this.incrementLength();
+    this.length++;
   }
 
   delete(): number {
     if (this.length === 0) return -1;
 
     const out = this.data[0];
-    this.decrementLength();
+    this.length--;
 
     if (this.length === 0) {
       this.data = [];
       return out;
     }
 
+    // Move the last element to the root
     this.data[0] = this.data[this.length];
+    // Remove the last element to avoid duplicates
+    this.data.length = this.length;
     this.heapifyDown(0);
+
     return out;
   }
 }
