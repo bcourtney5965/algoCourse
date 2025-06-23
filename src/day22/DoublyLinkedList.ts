@@ -102,6 +102,44 @@ export default class DoublyLinkedList<T> {
     return node.value;
   }
 
+  remove(item: T): T | undefined {
+    if (!this.head) return undefined;
+    let curr = this.head;
+    for (let i = 0; curr && i < this.length; ++i) {
+      if (curr.value === item) {
+        break;
+      }
+      curr = curr.next as Node<T>;
+    }
+    if (!curr) return;
+
+    this.decrement();
+
+    if (this.length === 0) {
+      const out = this.head?.value;
+      this.head = this.tail = undefined;
+      return out;
+    }
+
+    if (curr.prev) {
+      curr.prev = curr.next;
+    }
+    if (curr.next) {
+      curr.next.prev = curr.prev;
+    }
+
+    if (curr === this.head) {
+      this.head = curr.next;
+    }
+    if (curr === this.tail) {
+      this.tail = curr.prev;
+    }
+
+    curr.prev = curr.next = undefined;
+
+    return curr.value;
+  }
+
   removeAt(idx: number): T | undefined {
     const node = this.getAt(idx);
 
@@ -133,7 +171,7 @@ export default class DoublyLinkedList<T> {
   private getAt(idx: number): Node<T> | undefined {
     let curr = this.head;
     for (let i = 0; curr && i < idx; ++i) {
-      curr = curr.next;
+      curr = curr.next as Node<T>;
     }
     return curr;
   }
